@@ -1,0 +1,138 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"AuthResponse": {
+				"properties": {
+					"token": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_UserAttributes.Exclude_keyofUserAttributes.id__": {
+				"properties": {},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_UserAttributes.id_": {
+				"$ref": "#/components/schemas/Pick_UserAttributes.Exclude_keyofUserAttributes.id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"Partial_Pick_UserAttributes.id__": {
+				"properties": {},
+				"type": "object",
+				"description": "Make all properties in T optional"
+			},
+			"PartialBy_UserAttributes.id_": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/Omit_UserAttributes.id_"
+					},
+					{
+						"$ref": "#/components/schemas/Partial_Pick_UserAttributes.id__"
+					}
+				],
+				"description": "Type helper for making certain fields of an object optional."
+			},
+			"UserCreationAttributes": {
+				"$ref": "#/components/schemas/PartialBy_UserAttributes.id_"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "poses-app",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/user/register": {
+			"post": {
+				"operationId": "Register",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserCreationAttributes"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/login": {
+			"post": {
+				"operationId": "Authorize",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"password": {
+										"type": "string"
+									},
+									"login": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"password",
+									"login"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
