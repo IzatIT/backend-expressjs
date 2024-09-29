@@ -23,7 +23,7 @@ export class UserController {
     @Post("/login")
     public async authorize(@Body() body: { login: string; password: string }): Promise<AuthResponse> {
         const { login, password } = body;
-        const { token } = await this.userService.login(login, password);
-        return { token };
+        const response = await this.userService.login(login, password);
+        return response;
     }
 }

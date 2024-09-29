@@ -17,7 +17,7 @@ export class UserService {
         return user;
     }
 
-    public async login(login: string, password: string): Promise<{ token: string }> {
+    public async login(login: string, password: string): Promise<any> {
         const user = await User.findOne({ where: { login: login } });
         if (!user) {
             throw new Error("404");
@@ -32,9 +32,9 @@ export class UserService {
         if (!isPasswordValid) {
             throw new Error("401");
         }
-
-        const token = this.generateToken(user);
-        return { token };
+        console.log("request detected")
+        const accessToken = this.generateToken(user);
+        return { accessToken, refreshToken: "213123", ...user.dataValues, };
     }
 
     private generateToken(user: User): string {
