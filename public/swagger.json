@@ -59,7 +59,7 @@
 		"contact": {}
 	},
 	"paths": {
-		"/user/register": {
+		"/api/v1/user/register": {
 			"post": {
 				"operationId": "Register",
 				"responses": {
@@ -88,7 +88,7 @@
 				}
 			}
 		},
-		"/user/login": {
+		"/api/v1/user/login": {
 			"post": {
 				"operationId": "Authorize",
 				"responses": {

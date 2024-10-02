@@ -8,7 +8,7 @@ interface AuthResponse {
     message?: string;
 }
 
-@Route("user")
+@Route("api/v1/user")
 export class UserController {
     private userService = new UserService();
 

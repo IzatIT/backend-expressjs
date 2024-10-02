@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: poses-app
+    ports:
+      - '3000:3000'  # Настройте порт, если необходимо
+    volumes:
+      - .:/usr/src/app  # Монтируем текущую директорию
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_USER=your_db_user
+      - DB_PASS=your_db_password
+      - DB_NAME=poses_app  # Имя базы данных
+    command: npm run dev  # Измените на npm start для продакшн-версии
+
+  db:
+    image: postgres:13  # Используем конкретную версию PostgreSQL
+    container_name: poses-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: poses_app  # Имя базы данных
+    ports:
+      - '5432:5432'  # Открываем порт PostgreSQL
+
+networks:
+  default:
+    driver: bridge

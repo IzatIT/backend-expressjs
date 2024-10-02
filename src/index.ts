@@ -39,17 +39,23 @@ app.get("*", (req, res) => {
 
 app.listen(PORT, async () => {
     await db.sync().then(() => {
+        console.log("Connected to database")
     })
-    await User.findOrCreate({
-        where: { login: "admin" },
-        defaults: {
-            age: 20,
-            fullname: "Super Admin",
-            inn: "00000000000000",
-            login: "admin",
-            password: "admin",
-            role: USER_ROLES.SUPER_ADMIN,
-            sex: true,
-        }
-    });
+    try {
+        await User.findOrCreate({
+            where: { login: "admin" },
+            defaults: {
+                age: 20,
+                fullname: "Super Admin",
+                inn: "00000000000000",
+                login: "admin",
+                password: "admin",
+                role: USER_ROLES.SUPER_ADMIN,
+                sex: true,
+            }
+        });
+        console.log("created")
+    } catch (error) {
+        console.log(error)
+    }
 })

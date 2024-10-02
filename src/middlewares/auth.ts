@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { JWT_SECRET } from "../constants/user";
 import jwt from "jsonwebtoken";
-import { UserAttributes } from "../models/user";
 
 export const authenticateToken = (req: Request, res: Response, next: Function) => {
     const authHeader = req.headers['authorization']
