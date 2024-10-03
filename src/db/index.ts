@@ -1,5 +1,6 @@
 import Sequelize from '@sequelize/core';
 import { User } from '../models/user';
+import { Todo } from '../models/todos';
 
 const host = String(process.env.DB_HOST || "localhost");
 const port = Number(process.env.DB_PORT || 5432);
@@ -14,5 +15,5 @@ export const db = new Sequelize({
     host,
     port,
     dialect: "postgres",
-    models: [User]
+    models: [User, Todo]
 });

@@ -7,7 +7,7 @@ import { db } from './db';
 import { User } from './models/user';
 import { USER_ROLES } from './constants/user';
 import UserRoutes from './routes/user';
-import NewsRoutes from './routes/poses';
+import TodoRoutes from './routes/todo';
 import { authenticateToken } from './middlewares/auth';
 import dotenv from "dotenv";
 
@@ -21,7 +21,7 @@ app.use(morgan("tiny"));
 app.use(express.static("public"));
 app.use(express.json())
 app.use("/api/v1/user", UserRoutes);
-app.use("/api/v1/poses", NewsRoutes);
+app.use("/api/v1/todo", TodoRoutes);
 
 app.use(
     "/api/v1/docs",
