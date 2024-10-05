@@ -47,25 +47,6 @@
 			"UserCreationAttributes": {
 				"$ref": "#/components/schemas/PartialBy_UserAttributes.id_"
 			},
-			"TodoCreationAttributes": {
-				"properties": {
-					"did": {
-						"type": "boolean"
-					},
-					"enabled": {
-						"type": "boolean"
-					},
-					"title": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"did",
-					"enabled",
-					"title"
-				],
-				"type": "object"
-			},
 			"TodoAttributes": {
 				"properties": {
 					"updatedAt": {
@@ -97,6 +78,25 @@
 					"enabled",
 					"title",
 					"id"
+				],
+				"type": "object"
+			},
+			"TodoCreationAttributes": {
+				"properties": {
+					"did": {
+						"type": "boolean"
+					},
+					"enabled": {
+						"type": "boolean"
+					},
+					"title": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"did",
+					"enabled",
+					"title"
 				],
 				"type": "object"
 			}
@@ -191,7 +191,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TodoCreationAttributes"
+									"$ref": "#/components/schemas/TodoAttributes"
 								}
 							}
 						}
@@ -287,9 +287,11 @@
 						}
 					}
 				]
-			},
-			"delete": {
-				"operationId": "Delete",
+			}
+		},
+		"/api/v1/todo/did": {
+			"post": {
+				"operationId": "Did",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -321,9 +323,43 @@
 				]
 			}
 		},
-		"/api/v1/todo/did/{id}": {
+		"/api/v1/todo/disable": {
+			"delete": {
+				"operationId": "Disable",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/TodoAttributes"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api/v1/todo/enable": {
 			"post": {
-				"operationId": "Did",
+				"operationId": "Enable",
 				"responses": {
 					"200": {
 						"description": "Ok",

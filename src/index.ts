@@ -17,6 +17,7 @@ const app: Application = express();
 const { PORT = 8000 } = process.env;
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 app.use(express.static("public"));
 app.use(express.json())

@@ -9,7 +9,7 @@ export class TodoController {
     private todoService = new TodoService();
 
     @Post("/create")
-    public async create(@Body() data: TodoCreationAttributes): Promise<TodoCreationAttributes> {
+    public async create(@Body() data: TodoCreationAttributes): Promise<TodoAttributes> {
         const res = await this.todoService.create(data);
         return res
     }
@@ -32,7 +32,7 @@ export class TodoController {
         return data
     }
 
-    @Post("/did/{id}")
+    @Post("/did")
     public async did(
         @Query() id: number
     ): Promise<TodoAttributes | null> {
@@ -44,13 +44,22 @@ export class TodoController {
     }
 
 
-    @Delete("/{id}")
-    public async delete(
+    @Delete("/disable")
+    public async disable(
         @Query() id: number
     ): Promise<TodoAttributes | null> {
-        const todo = await this.getById(id);
         const data = await this.todoService.update(id, {
-            enabled: !todo?.did
+            enabled: false
+        })
+        return data
+    }
+
+    @Post("/enable")
+    public async enable(
+        @Query() id: number
+    ): Promise<TodoAttributes | null> {
+        const data = await this.todoService.update(id, {
+            enabled: true
         })
         return data
     }

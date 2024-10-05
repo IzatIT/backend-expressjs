@@ -1,13 +1,19 @@
 import express, { Request, Response } from "express";
 import { catchAsync } from "../middlewares";
 import { TodoController } from "../controllers/todo";
+import { TodoCreationAttributes } from "../models/todos";
 
 const router = express.Router();
 
 router.post("/create", catchAsync(async (req: Request, res: Response) => {
     const controller = new TodoController();
-    const response = await controller.create(req.body);
-    res.status(200).json(response);
+    const createData: TodoCreationAttributes = req.body
+    if (createData) {
+        const response = await controller.create(createData);
+        res.status(200).json(response);
+    } else {
+        res.status(400).json("Fields are required")
+    }
 }));
 
 router.post("/update/:id", catchAsync(async (req: Request, res: Response) => {
@@ -33,7 +39,7 @@ router.get("/:id", catchAsync(async (req: Request, res: Response) => {
 }));
 
 
-router.post("/did/:id", catchAsync(async (req: Request, res: Response) => {
+router.post("/did", catchAsync(async (req: Request, res: Response) => {
     const controller = new TodoController();
     const id = parseInt(`${req.query.id}`);
     const response = await controller.did(id);
@@ -44,10 +50,22 @@ router.post("/did/:id", catchAsync(async (req: Request, res: Response) => {
     }
 }));
 
-router.delete("/:id", catchAsync(async (req: Request, res: Response) => {
+router.delete("/disable", catchAsync(async (req: Request, res: Response) => {
     const controller = new TodoController();
     const id = parseInt(`${req.query.id}`);
-    const response = await controller.delete(id);
+    const response = await controller.disable(id);
+    if (response) {
+        res.status(200).json(response);
+    } else {
+        res.status(404).json({ message: "Not found" });
+    }
+}));
+
+
+router.post("/enable", catchAsync(async (req: Request, res: Response) => {
+    const controller = new TodoController();
+    const id = parseInt(`${req.query.id}`);
+    const response = await controller.enable(id);
     if (response) {
         res.status(200).json(response);
     } else {
@@ -65,5 +83,8 @@ router.get("/", catchAsync(async (req: Request, res: Response) => {
         res.status(404).json({ message: "Not found" });
     }
 }));
+
+
+
 
 export default router;

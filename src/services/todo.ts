@@ -5,7 +5,8 @@ export class TodoService {
     public async getAll(): Promise<Todo[]> {
         try {
             const todos = await Todo.findAll({
-                attributes: ['title', "id", "createdAt", "updatedAt", "did", "enabled"]
+                attributes: ['title', "id", "createdAt", "updatedAt", "did", "enabled"],
+                order: [["createdAt", "ASC"]]
             });
             return todos;
         } catch (error) {
